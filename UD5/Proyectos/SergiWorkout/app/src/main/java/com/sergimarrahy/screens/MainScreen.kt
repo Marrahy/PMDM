@@ -2,6 +2,8 @@ package com.sergimarrahy.screens
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -31,33 +34,55 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sergimarrahy.route.Routes
 import com.sergimarrahy.sergiworkout.viewmodel.CommonViewModel
+import com.sergimarrahy.sergiworkout.viewmodel.MainViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     navController: NavController,
-    commonViewModel: CommonViewModel
+    commonViewModel: CommonViewModel,
+    mainViewModel: MainViewModel
 ) {
-    var errorMessage by rememberSaveable { mutableStateOf("No puedes hacer menos de 3 repeticiones") }
+    val commonRepsNumber: Int by commonViewModel.repsNumber.observeAsState(initial = 5)
+    val commonUserName: String by commonViewModel.userName.observeAsState(initial  = "")
+
+    val errorMessage by rememberSaveable { mutableStateOf("Mínimo de repeticiones alcanzado") }
     val context = LocalContext.current
-    var userName by rememberSaveable { mutableStateOf("") }
-    val userNameIsValid by remember {
+    val repsNumberIsValid by remember {
         derivedStateOf {
-            checkUserName(userName)
+            checkRepsNumber(commonRepsNumber)
         }
     }
-    val commonRepsNumber: Int by commonViewModel.repsNumber.observeAsState(initial = 3)
+    val userNameIsValid by remember {
+        derivedStateOf {
+            checkUserName(commonUserName)
+        }
+    }
 
-    Scaffold(
+    Scaffold (
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = mainViewModel.motivationSentence.value!!,
+                        maxLines = 1,
+                        fontStyle = FontStyle.Italic
+                    )
+                }
+            )
+        },
         bottomBar = {
             BottomAppBar {
-                LaunchedEffect(key1 = errorMessage) {
-                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                if (repsNumberIsValid) {
+                    LaunchedEffect(key1 = errorMessage) {
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -66,100 +91,102 @@ fun MainScreen(
             modifier = Modifier
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "¡Frase Motivadora!"
+            OutlinedTextField(
+                value = commonUserName,
+                onValueChange = {
+                    commonViewModel.setUserName(it)
+                },
+                modifier = Modifier
+                    .size(
+                        width = 200.dp,
+                        height = 60.dp
+                    ),
+                singleLine = true,
+                label = {
+                    Text(
+                        text = "Usuario"
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "User name"
+                    )
+                },
+                isError = userNameIsValid,
+                supportingText = {
+                    if (userNameIsValid) {
+                        Text(
+                            text = "Nombre de usuario no válido",
+                        )
+                    }
+                }
             )
-            Row {
+            Spacer(
+                modifier = Modifier
+                    .padding(vertical = 8.dp, horizontal = 10.dp)
+            )
+            Column {
                 OutlinedTextField(
-                    value = userName,
+                    value = "$commonRepsNumber",
                     onValueChange = {
-                        userName = it
-                    },
-                    modifier = Modifier
-                        .size(width = 200.dp, height = 60.dp),
-                    singleLine = true,
-                    isError = !userNameIsValid,
-                    supportingText = {
-                        if (userName.isNotBlank() && !userNameIsValid) {
-                            Text(
-                                text = "Nombre de usuario no válido",
-                            )
-                        }
+
                     },
                     label = {
                         Text(
-                            text = "Usuario"
+                            text = "Repeticiones"
                         )
                     },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "User name"
-                        )
-                    }
+                    readOnly = true,
+                    modifier = Modifier
+                        .size(width = 120.dp, height = 60.dp),
                 )
                 Spacer(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(vertical = 8.dp, horizontal = 10.dp)
                 )
-                Column {
-                    OutlinedTextField(
-                        value = "$commonRepsNumber",
-                        onValueChange = {
-
-                        },
-                        label = {
-                            Text(
-                                text = "Repeticiones"
-                            )
-                        },
-                        readOnly = true,
-                        modifier = Modifier
-                            .size(width = 120.dp, height = 60.dp),
-                    )
-                    Row {
-                        Button(
-                            onClick = {
-                                commonViewModel.sumRepsNumber()
-                            }
-                        ) {
-                            Text(
-                                text = "+1"
-                            )
+                Row {
+                    Button(
+                        onClick = {
+                            commonViewModel.sumRepsNumber()
                         }
-                        Spacer(
-                            modifier = Modifier
-                                .padding(4.dp)
+                    ) {
+                        Text(
+                            text = "+1"
                         )
-                        Button(
-                            onClick = {
-                                if (commonRepsNumber != 3 ) commonViewModel.minusRepsNumber()
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .padding(4.dp)
+                    )
+                    Button(
+                        onClick = {
+                            if (commonRepsNumber != 3) {
+                                commonViewModel.minusRepsNumber()
                             }
-                        ) {
-                            Text(
-                                text = "-1"
-                            )
                         }
+                    ) {
+                        Text(
+                            text = "-1"
+                        )
                     }
                 }
             }
-            Button(
-                enabled = userNameIsValid,
-                onClick = {
-                    navController.navigate(Routes.WorkoutScreen.route)
+            AnimatedVisibility(visible = userNameIsValid) {
+                Button(
+                    onClick = {
+                        navController.navigate(Routes.WorkoutScreen.route)
+                    }
+                ) {
+                    Text(
+                        text = "Siguiente"
+                    )
                 }
-            ) {
-                Text(
-                    text = "Siguiente"
-                )
             }
         }
     }
 }
-
-fun checkUserName(name: String): Boolean {
-    val regex = Regex("^[a-zA-z]+$")
-    return name.matches(regex)
-}
+fun checkRepsNumber(numReps: Int): Boolean = numReps == 3
+fun checkUserName(name: String): Boolean = name.isNotEmpty()

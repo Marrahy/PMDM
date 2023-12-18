@@ -8,9 +8,15 @@ import com.sergimarrahy.route.Routes
 import com.sergimarrahy.screens.MainScreen
 import com.sergimarrahy.screens.WorkoutScreen
 import com.sergimarrahy.sergiworkout.viewmodel.CommonViewModel
+import com.sergimarrahy.sergiworkout.viewmodel.MainViewModel
+import com.sergimarrahy.sergiworkout.viewmodel.WorkoutViewModel
 
 @Composable
-fun Navigation(commonViewModel: CommonViewModel) {
+fun Navigation(
+    commonViewModel: CommonViewModel,
+    mainViewModel: MainViewModel,
+    workoutViewModel: WorkoutViewModel
+) {
     val navController = rememberNavController()
 
     NavHost(
@@ -18,11 +24,11 @@ fun Navigation(commonViewModel: CommonViewModel) {
         startDestination = Routes.MainScreen.route
     ) {
         composable(Routes.MainScreen.route) {
-            MainScreen(navController, commonViewModel)
+            MainScreen(navController, commonViewModel, mainViewModel)
         }
 
         composable(Routes.WorkoutScreen.route) {
-            WorkoutScreen(navController, commonViewModel)
+            WorkoutScreen(navController, commonViewModel, workoutViewModel)
         }
     }
 }

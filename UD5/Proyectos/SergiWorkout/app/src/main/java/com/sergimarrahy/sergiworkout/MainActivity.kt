@@ -11,12 +11,16 @@ import androidx.compose.ui.Modifier
 import com.example.compose.SergiWorkoutTheme
 import com.sergimarrahy.navigation.Navigation
 import com.sergimarrahy.sergiworkout.viewmodel.CommonViewModel
+import com.sergimarrahy.sergiworkout.viewmodel.MainViewModel
+import com.sergimarrahy.sergiworkout.viewmodel.WorkoutViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val commonViewModel by viewModels<CommonViewModel>()
+        val mainViewModel by viewModels<MainViewModel>()
+        val workoutViewModel by viewModels<WorkoutViewModel>()
 
         setContent {
             SergiWorkoutTheme {
@@ -24,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Navigation(commonViewModel)
+                    Navigation(commonViewModel, mainViewModel, workoutViewModel)
                 }
             }
         }
