@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SergiPreferences</string>
+    <string name="text_button_next">Siguiente</string>
+    <string name="top_text_field_phone_number">Número de teléfono</string>
+    <string name="top_text_field_user_name">Nombre de usuario</string>
+    <string name="text_field_user_name">Nombre de usuario</string>
+    <string name="text_field_phone_number">Número de teléfono del usuario</string>
+    <string name="text_button_log_out">Cerrar sesión</string>
+    <string name="loading_text">Cargando...</string>
+</resources>
