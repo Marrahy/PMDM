@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.9.21-1.0.15"
 }
 
 android {
@@ -47,10 +48,20 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.6"
+    }
 }
 
 dependencies {
 
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.compose.room:room-runtime:2.6.1")
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     implementation("androidx.navigation:navigation-compose:2.7.6")

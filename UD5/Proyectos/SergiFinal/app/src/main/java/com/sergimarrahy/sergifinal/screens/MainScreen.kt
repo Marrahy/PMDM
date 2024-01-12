@@ -1,11 +1,14 @@
 package com.sergimarrahy.sergifinal.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
@@ -30,6 +33,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -79,7 +84,18 @@ fun MainScreen(navController: NavHostController) {
 
                             },
                             leadingIcon = {
-                                Image(painter = , contentDescription = )
+                                Image(
+                                    painter = painterResource(id = R.drawable.cartoon_network),
+                                    contentDescription = "Profile photo",
+                                    modifier = Modifier
+                                        .size(height = 50.dp, width = 50.dp)
+                                        .clip(CircleShape)
+                                        .border(
+                                            width = 2.dp,
+                                            color = Color.Black,
+                                            shape = CircleShape
+                                        )
+                                )
                             }
                         )
                         DropdownMenuItem(
@@ -152,10 +168,11 @@ fun MainScreen(navController: NavHostController) {
             }
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            Text(text = "Hola")
-        }
+        LazyColumn(
+            modifier = Modifier.padding(innerPadding),
+            content = {
+
+            }
+        )
     }
 }

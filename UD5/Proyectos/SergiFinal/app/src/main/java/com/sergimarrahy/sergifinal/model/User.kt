@@ -1,3 +1,3 @@
 package com.sergimarrahy.sergifinal.model
 
-class User(val userName: String, val phoneNumber: String)
+data class User(val userId: Int, val userName: String)
