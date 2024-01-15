@@ -8,7 +8,7 @@ interface GeneralDAO {
 
     suspend fun seriesExists(name: String): Int
 
-    suspend fun getSeriesById(id: Long): Series
+    suspend fun getSeriesByName(name: String): Series
 
     suspend fun addSeries(series: Series): Long
 

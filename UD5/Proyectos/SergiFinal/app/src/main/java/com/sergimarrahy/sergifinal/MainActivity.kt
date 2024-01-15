@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
             SergiFinalTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.primary
                 ) {
                     Navigation()
                 }

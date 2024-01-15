@@ -11,6 +11,9 @@ import com.sergimarrahy.sergifinal.screens.MainScreen
 import com.sergimarrahy.sergifinal.screens.ObjectScreen
 import com.sergimarrahy.sergifinal.screens.OnBoardingScreen
 import com.sergimarrahy.sergifinal.screens.SplashScreen
+import com.sergimarrahy.viewmodel.CommonViewModel
+import com.sergimarrahy.viewmodel.SeriesViewModel
+import com.sergimarrahy.viewmodel.SplashViewModel
 
 @Composable
 fun Navigation() {
@@ -18,7 +21,7 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.MainScreen.routes
+        startDestination = Routes.SplashScreen.routes
     ) {
         composable(
             route = Routes.SplashScreen.routes,

@@ -1,15 +1,18 @@
-    package com.sergipreferences.navigation
+package com.sergipreferences.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.sergipreferences.model.UserPreferences
 import com.sergipreferences.ui.screens.LoginScreen
 import com.sergipreferences.ui.screens.MainScreen
 import com.sergipreferences.ui.screens.SplashScreen
 import com.sergipreferences.viewmodel.PreferencesViewModel
 
-    @Composable
+@Composable
 fun Navigation(preferencesViewModel: PreferencesViewModel) {
     val navController = rememberNavController()
 
