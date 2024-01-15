@@ -1,19 +1,15 @@
 package com.sergimarrahy.sergifinal.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.sergimarrahy.sergifinal.screens.AddScreen
 import com.sergimarrahy.sergifinal.screens.AuthorScreen
 import com.sergimarrahy.sergifinal.screens.EditScreen
 import com.sergimarrahy.sergifinal.screens.MainScreen
-import com.sergimarrahy.sergifinal.screens.ObjectScreen
 import com.sergimarrahy.sergifinal.screens.OnBoardingScreen
 import com.sergimarrahy.sergifinal.screens.SplashScreen
-import com.sergimarrahy.viewmodel.CommonViewModel
-import com.sergimarrahy.viewmodel.SeriesViewModel
-import com.sergimarrahy.viewmodel.SplashViewModel
 
 @Composable
 fun Navigation() {
@@ -54,9 +50,9 @@ fun Navigation() {
             EditScreen(navController)
         }
         composable(
-            route = Routes.ObjectScreen.routes
+            route = Routes.SeriesScreen.routes
         ) {
-            ObjectScreen(navController)
+            //SeriesScreen(navController)
         }
     }
 }

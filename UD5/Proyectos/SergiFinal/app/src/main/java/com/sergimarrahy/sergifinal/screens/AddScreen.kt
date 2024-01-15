@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -29,13 +28,13 @@ import androidx.navigation.NavHostController
 import com.sergimarrahy.sergifinal.navigation.Routes
 import com.sergimarrahy.sergifinal.tools.TopCenterAppBarCustom
 import com.sergimarrahy.viewmodel.AddScreenViewModel
-import com.sergimarrahy.viewmodel.SeriesViewModel
+import com.sergimarrahy.viewmodel.MainScreenViewModel
 
 @Composable
 fun AddScreen(navController: NavHostController) {
     val context = LocalContext.current
-    val seriesViewModel = remember {
-        SeriesViewModel(context)
+    val mainScreenViewModel = remember {
+        MainScreenViewModel(context)
     }
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -63,17 +62,17 @@ fun AddScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            val addSeriesViewModel = remember {
+            val addScreenViewModel = remember {
                 AddScreenViewModel()
             }
-            val inputSeriesName by addSeriesViewModel.seriesName.observeAsState(initial = "")
+            val inputSeriesName by addScreenViewModel.seriesName.observeAsState(initial = "")
 
             Spacer(modifier = Modifier.padding(innerPadding))
             OutlinedTextField(
                 colors = OutlinedTextFieldDefaults.colors(Color.White),
                 value = inputSeriesName,
                 onValueChange = {
-                    addSeriesViewModel.onSeriesNameChange(it)
+                    addScreenViewModel.onSeriesNameChange(it)
                 },
                 label = {
                     Text(
@@ -83,9 +82,9 @@ fun AddScreen(navController: NavHostController) {
             )
             Button(
                 onClick = {
-                    seriesViewModel.addSeries(inputSeriesName, "description", 1)
-                    addSeriesViewModel.onSeriesNameDelete()
-                },
+                    mainScreenViewModel.addSeries(inputSeriesName, "description", 1)
+                    addScreenViewModel.onSeriesNameDelete()
+                }
             ) {
                 Text(
                     text = "Añadir"

@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -40,17 +41,21 @@ import androidx.navigation.NavHostController
 import com.sergimarrahy.gestordetareas.database.entities.Series
 import com.sergimarrahy.sergifinal.navigation.Routes
 import com.sergimarrahy.sergifinal.tools.TopCenterAppBarCustom
-import com.sergimarrahy.viewmodel.SeriesViewModel
+import com.sergimarrahy.viewmodel.CommonViewModel
+import com.sergimarrahy.viewmodel.MainScreenViewModel
 
 @Composable
 fun MainScreen(
     navController: NavHostController,
 ) {
     val context = LocalContext.current
-    val seriesViewModel = remember {
-        SeriesViewModel(context)
+    val mainScreenViewModel = remember {
+        MainScreenViewModel(context)
     }
-    val seriesList by seriesViewModel.seriesList.observeAsState(initial = emptyList())
+    mainScreenViewModel.getAllSeries()
+    mainScreenViewModel.loadUser()
+
+    val seriesList by mainScreenViewModel.seriesList.observeAsState(initial = emptyList())
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.onPrimary,
@@ -104,7 +109,7 @@ fun MainScreen(
                         SeriesItem(
                             series = series,
                             onDelete = {
-                                seriesViewModel.deleteSeries(series)
+                                mainScreenViewModel.deleteSeries(series)
                             }
                         )
                     }

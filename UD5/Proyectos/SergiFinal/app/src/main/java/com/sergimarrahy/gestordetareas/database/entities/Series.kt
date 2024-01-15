@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "series")
 data class Series(
     @PrimaryKey var name: String = "",
-    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "description") val description: String = "",
     @ColumnInfo(name = "chapter_number") val chapterNumber: Int = 0,
     var isDone: Boolean = false
 )

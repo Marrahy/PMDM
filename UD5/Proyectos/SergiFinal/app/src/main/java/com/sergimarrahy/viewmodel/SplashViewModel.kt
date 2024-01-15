@@ -19,7 +19,7 @@ class SplashViewModel(context: Context) : ViewModel() {
         val listOfSampleSeries = listOf(
             Series("Las Super Nenas", "Cuatro chicas con superpoderes que luchan contra el crimen.", 156),
             Series("Ed, Edd y Eddy", "Tres amigos que viven en un barrio suburbano.", 425),
-            Series("Courage the Cowardly Dog", "Un perro cobarde que vive con su dueña, Muriel, y su suegro, Eustace.", 104 ),
+            Series("Courage the Cowardly Dog", "Un perro cobarde que vive con su dueña, Muriel, y su suegro, Eustace.", 104),
             Series("Samurai Jack", "Un samurái que viaja en el tiempo para derrotar a Aku.", 65),
             Series("Steven Universe", "Una historia sobre la amistad, la familia y la autoaceptación.", 260),
             Series ("Adventure Time", "Una historia sobre Finn, un niño humano, y Jake, su perro mágico.", 283),
