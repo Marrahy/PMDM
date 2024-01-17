@@ -7,5 +7,4 @@ sealed class Routes(val routes: String) {
     object AuthorScreen : Routes("author_screen")
     object SeriesScreen : Routes("series_screen")
     object AddScreen : Routes("add_screen")
-    object EditScreen : Routes("edit_screen")
 }

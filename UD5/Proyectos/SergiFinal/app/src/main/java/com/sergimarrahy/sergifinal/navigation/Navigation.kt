@@ -6,9 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sergimarrahy.sergifinal.screens.AddScreen
 import com.sergimarrahy.sergifinal.screens.AuthorScreen
-import com.sergimarrahy.sergifinal.screens.EditScreen
 import com.sergimarrahy.sergifinal.screens.MainScreen
 import com.sergimarrahy.sergifinal.screens.OnBoardingScreen
+import com.sergimarrahy.sergifinal.screens.SeriesScreen
 import com.sergimarrahy.sergifinal.screens.SplashScreen
 
 @Composable
@@ -20,39 +20,34 @@ fun Navigation() {
         startDestination = Routes.SplashScreen.routes
     ) {
         composable(
-            route = Routes.SplashScreen.routes,
+            route = Routes.SplashScreen.routes
         ) {
             SplashScreen(navController)
         }
         composable(
-            route = Routes.MainScreen.routes,
+            route = Routes.MainScreen.routes
         ) {
             MainScreen(navController)
         }
         composable(
-            route = Routes.OnBoardingScreen.routes,
+            route = Routes.OnBoardingScreen.routes
         ) {
             OnBoardingScreen(navController)
         }
         composable(
-            route = Routes.AuthorScreen.routes,
+            route = Routes.AuthorScreen.routes
         ) {
             AuthorScreen(navController)
         }
         composable(
-            route = Routes.AddScreen.routes,
+            route = Routes.AddScreen.routes
         ) {
             AddScreen(navController)
         }
         composable(
-            route = Routes.EditScreen.routes,
-        ) {
-            EditScreen(navController)
-        }
-        composable(
             route = Routes.SeriesScreen.routes
         ) {
-            //SeriesScreen(navController)
+            SeriesScreen(navController)
         }
     }
 }

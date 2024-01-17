@@ -1,6 +1,8 @@
 package com.sergimarrahy.sergifinal.screens
 
+import android.util.Log
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,18 +16,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BubbleChart
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -41,7 +44,6 @@ import androidx.navigation.NavHostController
 import com.sergimarrahy.gestordetareas.database.entities.Series
 import com.sergimarrahy.sergifinal.navigation.Routes
 import com.sergimarrahy.sergifinal.tools.TopCenterAppBarCustom
-import com.sergimarrahy.viewmodel.CommonViewModel
 import com.sergimarrahy.viewmodel.MainScreenViewModel
 
 @Composable
@@ -52,6 +54,7 @@ fun MainScreen(
     val mainScreenViewModel = remember {
         MainScreenViewModel(context)
     }
+
     mainScreenViewModel.getAllSeries()
     mainScreenViewModel.loadUser()
 
@@ -62,7 +65,7 @@ fun MainScreen(
         contentColor = MaterialTheme.colorScheme.primaryContainer,
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopCenterAppBarCustom(navController)
+            TopCenterAppBarCustom(navController, mainScreenViewModel)
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -107,10 +110,12 @@ fun MainScreen(
                 ) {
                     items(seriesList) { series ->
                         SeriesItem(
-                            series = series,
+                            series,
                             onDelete = {
                                 mainScreenViewModel.deleteSeries(series)
-                            }
+                            },
+                            mainScreenViewModel,
+                            navController
                         )
                     }
                 }
@@ -122,9 +127,24 @@ fun MainScreen(
 @Composable
 fun SeriesItem(
     series: Series,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    mainScreenViewModel: MainScreenViewModel,
+    navController: NavHostController
 ) {
     ListItem(
+        modifier = Modifier
+            .padding(4.dp)
+            .clip(CircleShape)
+            .border(
+                width = 2.dp,
+                color = Color.LightGray,
+                shape = CircleShape
+            )
+            .clickable {
+                mainScreenViewModel.onSeriesClicked(series)
+                navController.navigate(Routes.SeriesScreen.routes)
+
+            },
         headlineContent = {
             Text(
                 text = series.name,
@@ -153,13 +173,5 @@ fun SeriesItem(
                 )
             }
         },
-        modifier = Modifier
-            .padding(4.dp)
-            .clip(CircleShape)
-            .border(
-                width = 2.dp,
-                color = Color.LightGray,
-                shape = CircleShape
-            )
     )
 }

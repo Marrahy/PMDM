@@ -40,7 +40,7 @@ import com.sergimarrahy.viewmodel.MainScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopCenterAppBarCustom(navController: NavController) {
+fun TopCenterAppBarCustom(navController: NavController, mainScreenViewModel: MainScreenViewModel) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
         title = {
@@ -53,12 +53,12 @@ fun TopCenterAppBarCustom(navController: NavController) {
             )
         },
         navigationIcon = {
-            CustomDropDownMenu(navController = navController)
+            CustomDropDownMenu(navController, mainScreenViewModel)
         }
     )
 }
 @Composable
-fun CustomDropDownMenu(navController: NavController) {
+fun CustomDropDownMenu(navController: NavController, mainScreenViewModel: MainScreenViewModel) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     IconButton(
         onClick = {
@@ -131,7 +131,7 @@ fun CustomDropDownMenu(navController: NavController) {
                 Text(text = "Cerrar Sesión")
             },
             onClick = {
-                //mainScreenViewModel.deleteUserPreferences()
+                mainScreenViewModel.deleteUserPreferences()
                 navController.navigate(Routes.OnBoardingScreen.routes)
             },
             leadingIcon = {

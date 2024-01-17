@@ -15,12 +15,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -39,16 +41,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sergimarrahy.sergifinal.R
 import com.sergimarrahy.sergifinal.navigation.Routes
-import com.sergimarrahy.viewmodel.CommonViewModel
+import com.sergimarrahy.viewmodel.MainScreenViewModel
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun OnBoardingScreen(navController: NavHostController) {
     val context = LocalContext.current
-    val commonViewModel = remember {
-        CommonViewModel(context)
+    val mainScreenViewModel = remember {
+        MainScreenViewModel(context)
     }
-    val userName by commonViewModel.userName.observeAsState(initial = "")
+    val userName by mainScreenViewModel.userName.observeAsState(initial = "")
     val credentialsAreValid by derivedStateOf {
         userNameIsValid(userName)
     }
@@ -98,7 +101,7 @@ fun OnBoardingScreen(navController: NavHostController) {
                         .padding(start = 16.dp, end = 16.dp)
                         .fillMaxWidth(),
                     value = userName,
-                    onValueChange = { commonViewModel.onUserNameChange(it) },
+                    onValueChange = { mainScreenViewModel.onUserNameChange(it) },
                     singleLine = true,
                     label = {
                         Text(
@@ -114,19 +117,26 @@ fun OnBoardingScreen(navController: NavHostController) {
             modifier = Modifier
                 .padding(16.dp)
         )
-        AnimatedVisibility(visible = credentialsAreValid, enter = expandHorizontally()) {
+        AnimatedVisibility(
+            visible = credentialsAreValid,
+            enter = expandHorizontally()
+        ) {
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
                     .padding(start = 16.dp, end = 16.dp),
                 onClick = {
-                    commonViewModel.saveUserName(userName)
+                    mainScreenViewModel.saveUserName(userName)
                     navController.popBackStack()
                     navController.navigate(Routes.MainScreen.routes)
                 },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer)
             ) {
+                LaunchedEffect(key1 = true) {
+                    delay(3000)
+                    mainScreenViewModel.loadSeriesSampleList()
+                }
                 Text(
                     text = "Siguiente",
                     color = Color.White,

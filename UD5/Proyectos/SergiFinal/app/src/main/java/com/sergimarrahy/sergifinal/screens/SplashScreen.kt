@@ -20,32 +20,32 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.sergimarrahy.sergifinal.R
 import com.sergimarrahy.sergifinal.navigation.Routes
-import com.sergimarrahy.viewmodel.SplashViewModel
+import com.sergimarrahy.viewmodel.MainScreenViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
     val context = LocalContext.current
-    val splashViewModel = remember {
-        SplashViewModel(context)
+    val mainScreenViewModel = remember {
+        MainScreenViewModel(context)
     }
     LaunchedEffect(key1 = true) {
         delay(3000)
         navController.popBackStack()
         navController.navigate(Routes.MainScreen.routes)
-
-//        splashViewModel.isDataStored(
-//            onCollected = {
-//                if (it) {
-//                } else {
-//                    navController.navigate(Routes.OnBoardingScreen.routes)
-//                    launch {
-//                        splashViewModel.loadSeriesSampleList()
-//                    }
-//                }
-//            }
-//        )
+        mainScreenViewModel.isDataStored(
+            onCollected = {
+                if (it) {
+                    navController.navigate(Routes.MainScreen.routes)
+                } else {
+                    navController.navigate(Routes.OnBoardingScreen.routes)
+                    launch {
+                        mainScreenViewModel.loadSeriesSampleList()
+                    }
+                }
+            }
+        )
     }
 
     Splash()

@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.map
 class AppPreferences(val context: Context) {
     companion object {
         val USER_NAME = stringPreferencesKey("USER_NAME")
-    }
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "preferences")
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "preferences")
+    }
 
     suspend fun saveUser(userPreferences: User) {
         context.dataStore.edit { preferences ->

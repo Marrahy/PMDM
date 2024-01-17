@@ -1,19 +1,13 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "b48dcdaecc199657c87e67a0a5c1b155",
+    "version": 2,
+    "identityHash": "b8018a2ef1072cda048f1a42cf3379bd",
     "entities": [
       {
         "tableName": "series",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `chapter_number` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `chapter_number` TEXT NOT NULL, `isDone` INTEGER NOT NULL, PRIMARY KEY(`name`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -31,12 +25,18 @@
             "columnName": "chapter_number",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "isDone",
+            "columnName": "isDone",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "id"
+            "name"
           ]
         },
         "indices": [],
@@ -46,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b48dcdaecc199657c87e67a0a5c1b155')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b8018a2ef1072cda048f1a42cf3379bd')"
     ]
   }
 }

@@ -4,12 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,52 +38,39 @@ import com.sergimarrahy.sergifinal.tools.TopCenterAppBarCustom
 
 @Composable
 fun AuthorScreen(navController: NavHostController) {
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            TopCenterAppBarCustom(navController)
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    navController.popBackStack()
-                },
-                containerColor = contentColorFor(MaterialTheme.colorScheme.tertiaryContainer)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Volver atrás"
-                )
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.gon),
+            contentDescription = "Profile Photo",
             modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+                .padding(4.dp)
+                .clip(CircleShape)
+                .border(
+                    width = 5.dp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    shape = CircleShape
+                )
+        )
+        Text(
+            text = "Sergi Marrahy Arenas",
+            fontSize = 30.sp,
+            fontFamily = FontFamily.Cursive,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.padding(20.dp))
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier.size(width = 100.dp, height = 100.dp),
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.gon),
-                contentDescription = "Profile Photo",
-                modifier = Modifier
-                    .padding(4.dp)
-                    .clip(CircleShape)
-                    .border(
-                        width = 5.dp,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        shape = CircleShape
-                    )
-            )
-            Text(
-                text = "Sergi Marrahy Arenas",
-                fontSize = 30.sp,
-                fontFamily = FontFamily.Cursive,
-                fontWeight = FontWeight.Bold
-            )
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Volver atrás")
         }
     }
 }
