@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b48dcdaecc199657c87e67a0a5c1b155",
+    "identityHash": "8d31da5155f2a5c51209e862b06bdf08",
     "entities": [
       {
         "tableName": "series",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `chapter_number` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `chapterNumber` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -28,7 +28,7 @@
           },
           {
             "fieldPath": "chapterNumber",
-            "columnName": "chapter_number",
+            "columnName": "chapterNumber",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -46,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b48dcdaecc199657c87e67a0a5c1b155')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d31da5155f2a5c51209e862b06bdf08')"
     ]
   }
 }

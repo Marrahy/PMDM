@@ -1,6 +1,7 @@
 package com.sergimarrahy.sergifinal.screens
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -45,16 +46,12 @@ import com.sergimarrahy.gestordetareas.database.entities.Series
 import com.sergimarrahy.sergifinal.navigation.Routes
 import com.sergimarrahy.sergifinal.tools.TopCenterAppBarCustom
 import com.sergimarrahy.viewmodel.MainScreenViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun MainScreen(
-    navController: NavHostController,
+    navController: NavHostController, mainScreenViewModel: MainScreenViewModel
 ) {
-    val context = LocalContext.current
-    val mainScreenViewModel = remember {
-        MainScreenViewModel(context)
-    }
-
     mainScreenViewModel.getAllSeries()
     mainScreenViewModel.loadUser()
 
@@ -143,7 +140,6 @@ fun SeriesItem(
             .clickable {
                 mainScreenViewModel.onSeriesClicked(series)
                 navController.navigate(Routes.SeriesScreen.routes)
-
             },
         headlineContent = {
             Text(
@@ -172,6 +168,6 @@ fun SeriesItem(
                     contentDescription = "Delete series"
                 )
             }
-        },
+        }
     )
 }

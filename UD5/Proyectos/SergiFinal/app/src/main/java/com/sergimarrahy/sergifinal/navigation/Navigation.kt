@@ -10,9 +10,10 @@ import com.sergimarrahy.sergifinal.screens.MainScreen
 import com.sergimarrahy.sergifinal.screens.OnBoardingScreen
 import com.sergimarrahy.sergifinal.screens.SeriesScreen
 import com.sergimarrahy.sergifinal.screens.SplashScreen
+import com.sergimarrahy.viewmodel.MainScreenViewModel
 
 @Composable
-fun Navigation() {
+fun Navigation(mainScreenViewModel: MainScreenViewModel) {
     val navController = rememberNavController()
 
     NavHost(
@@ -22,17 +23,17 @@ fun Navigation() {
         composable(
             route = Routes.SplashScreen.routes
         ) {
-            SplashScreen(navController)
+            SplashScreen(navController, mainScreenViewModel)
         }
         composable(
             route = Routes.MainScreen.routes
         ) {
-            MainScreen(navController)
+            MainScreen(navController, mainScreenViewModel)
         }
         composable(
             route = Routes.OnBoardingScreen.routes
         ) {
-            OnBoardingScreen(navController)
+            OnBoardingScreen(navController, mainScreenViewModel)
         }
         composable(
             route = Routes.AuthorScreen.routes
@@ -42,12 +43,12 @@ fun Navigation() {
         composable(
             route = Routes.AddScreen.routes
         ) {
-            AddScreen(navController)
+            AddScreen(navController, mainScreenViewModel)
         }
         composable(
             route = Routes.SeriesScreen.routes
         ) {
-            SeriesScreen(navController)
+            SeriesScreen(navController, mainScreenViewModel)
         }
     }
 }

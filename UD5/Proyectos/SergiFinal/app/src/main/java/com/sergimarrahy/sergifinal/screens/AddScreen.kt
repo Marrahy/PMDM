@@ -1,11 +1,14 @@
 package com.sergimarrahy.sergifinal.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,6 +24,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -39,11 +44,7 @@ import com.sergimarrahy.sergifinal.tools.TopCenterAppBarCustom
 import com.sergimarrahy.viewmodel.MainScreenViewModel
 
 @Composable
-fun AddScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val mainScreenViewModel = remember {
-        MainScreenViewModel(context)
-    }
+fun AddScreen(navController: NavHostController, mainScreenViewModel: MainScreenViewModel) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.primary,
@@ -60,7 +61,8 @@ fun AddScreen(navController: NavHostController) {
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Volver atrás"
+                    contentDescription = "Volver atrás",
+                    tint = MaterialTheme.colorScheme.inversePrimary
                 )
             }
         }
@@ -70,6 +72,7 @@ fun AddScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
+            val addingOption by rememberSaveable { mutableStateOf(false) }
             var inputSeriesName by rememberSaveable { mutableStateOf("") }
             var inputDescription by rememberSaveable { mutableStateOf("") }
             var inputChapterNumber by rememberSaveable { mutableStateOf("") }
@@ -111,9 +114,10 @@ fun AddScreen(navController: NavHostController) {
                     Text(
                         text = "Número de capítulos"
                     )
-                }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
-
+            Spacer(modifier = Modifier.padding(24.dp))
             Button(
                 onClick = {
                     mainScreenViewModel.addSeries(inputSeriesName, inputDescription, inputChapterNumber)
@@ -122,11 +126,21 @@ fun AddScreen(navController: NavHostController) {
                     inputChapterNumber = ""
                 }
             ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Añadir",
-                    textAlign = TextAlign.Center
-                )
+                AnimatedVisibility(visible = true) {
+                    if (addingOption) {
+                        Text(
+                            modifier = Modifier.size(width = 100.dp, height = 20.dp),
+                            text = "Añadir",
+                            textAlign = TextAlign.Center
+                        )
+                    } else {
+                        Text(
+                            modifier = Modifier.size(width = 100.dp, height = 20.dp),
+                            text = "Editar",
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
             }
         }
     }

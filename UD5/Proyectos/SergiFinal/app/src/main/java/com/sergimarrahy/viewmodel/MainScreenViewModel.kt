@@ -1,9 +1,12 @@
 package com.sergimarrahy.viewmodel
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sergimarrahy.gestordetareas.database.SeriesDataBase
@@ -14,18 +17,17 @@ import com.sergimarrahy.sergifinal.preferences.apppreferences.AppPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainScreenViewModel(context: Context) : ViewModel() {
-    private val preferences = AppPreferences(context)
+class MainScreenViewModel(application: Application) : AndroidViewModel(application) {
+    private val preferences = AppPreferences(application)
     var seriesList: LiveData<MutableList<Series>> = MutableLiveData()
-    var seriesSelected: Series = Series()
-    private val seriesDAO: SeriesDAO = SeriesDataBase.getInstance(context).seriesDAO()
+    private val seriesDAO: SeriesDAO = SeriesDataBase.getInstance(application).seriesDAO()
 
 
     private val _userName = MutableLiveData<String>()
-    val userName: LiveData<String> = _userName
+    var userName: LiveData<String> = _userName
 
     private val _selectedSeries = MutableLiveData<Series>()
-    val selectedSeries: LiveData<Series> = _selectedSeries
+    var selectedSeries: LiveData<Series> = _selectedSeries
 
     fun onUserNameChange(userName: String) {
         _userName.value = userName
@@ -80,12 +82,8 @@ class MainScreenViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun onSeriesClicked(series: Series): Series {
-        viewModelScope.launch(Dispatchers.IO) {
-            seriesSelected = seriesDAO.getSeriesByName(series.name)
-            Log.i("1", series.name)
-        }
-        return seriesSelected
+    fun onSeriesClicked(series: Series) {
+        _selectedSeries.value = series
     }
 
     suspend fun loadSeriesSampleList() {

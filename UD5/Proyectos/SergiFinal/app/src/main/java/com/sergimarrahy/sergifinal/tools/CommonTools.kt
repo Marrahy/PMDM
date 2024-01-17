@@ -67,7 +67,8 @@ fun CustomDropDownMenu(navController: NavController, mainScreenViewModel: MainSc
     ) {
         Icon(
             imageVector = Icons.Default.Menu,
-            contentDescription = "Menu"
+            contentDescription = "Menu",
+            tint = Color.White
         )
     }
     DropdownMenu(
@@ -88,7 +89,7 @@ fun CustomDropDownMenu(navController: NavController, mainScreenViewModel: MainSc
                     painter = painterResource(id = R.drawable.cartoon_network),
                     contentDescription = "Profile photo",
                     modifier = Modifier
-                        .size(height = 50.dp, width = 50.dp)
+                        .size(height = 35.dp, width = 35.dp)
                         .clip(CircleShape)
                         .border(
                             width = 2.dp,
@@ -108,7 +109,8 @@ fun CustomDropDownMenu(navController: NavController, mainScreenViewModel: MainSc
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Home,
-                    contentDescription = "Main Screen"
+                    contentDescription = "Main Screen",
+                    tint = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             }
         )
@@ -122,7 +124,8 @@ fun CustomDropDownMenu(navController: NavController, mainScreenViewModel: MainSc
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add Screen"
+                    contentDescription = "Add Screen",
+                    tint = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             }
         )
@@ -137,7 +140,8 @@ fun CustomDropDownMenu(navController: NavController, mainScreenViewModel: MainSc
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    contentDescription = "OnBoarding Screen"
+                    contentDescription = "OnBoarding Screen",
+                    tint = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             }
         )
@@ -151,7 +155,8 @@ fun CustomDropDownMenu(navController: NavController, mainScreenViewModel: MainSc
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.AccountBox,
-                    contentDescription = "Author Screen"
+                    contentDescription = "Author Screen",
+                    tint = MaterialTheme.colorScheme.onTertiaryContainer
                 )
             }
         )

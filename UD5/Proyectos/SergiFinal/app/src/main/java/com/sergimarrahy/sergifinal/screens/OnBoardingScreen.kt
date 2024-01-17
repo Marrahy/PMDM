@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -46,11 +47,7 @@ import kotlinx.coroutines.delay
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun OnBoardingScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val mainScreenViewModel = remember {
-        MainScreenViewModel(context)
-    }
+fun OnBoardingScreen(navController: NavHostController, mainScreenViewModel: MainScreenViewModel) {
     val userName by mainScreenViewModel.userName.observeAsState(initial = "")
     val credentialsAreValid by derivedStateOf {
         userNameIsValid(userName)
@@ -66,7 +63,8 @@ fun OnBoardingScreen(navController: NavHostController) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.cn_logo),
-            contentDescription = "Logo"
+            contentDescription = "Logo",
+            modifier = Modifier.size(width = 250.dp, height = 250.dp)
         )
         AnimatedVisibility(visible = true) {
             if (!isRegistered) {
@@ -79,6 +77,7 @@ fun OnBoardingScreen(navController: NavHostController) {
                         text = "¡Bienvenido a la aplicación dónde podrás guardar todas tus series favoritas!",
                         textAlign = TextAlign.Center
                     )
+                    Spacer(modifier = Modifier.padding(8.dp))
                     Button(
                         onClick = {
                             isRegistered = !isRegistered
@@ -92,6 +91,9 @@ fun OnBoardingScreen(navController: NavHostController) {
         }
 
         if (isRegistered) {
+            LaunchedEffect(key1 = true) {
+                mainScreenViewModel.loadSeriesSampleList()
+            }
             AnimatedVisibility(
                 visible = isRegistered,
                 enter = expandHorizontally()
@@ -133,10 +135,6 @@ fun OnBoardingScreen(navController: NavHostController) {
                 },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer)
             ) {
-                LaunchedEffect(key1 = true) {
-                    delay(3000)
-                    mainScreenViewModel.loadSeriesSampleList()
-                }
                 Text(
                     text = "Siguiente",
                     color = Color.White,

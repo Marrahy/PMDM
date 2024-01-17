@@ -25,11 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val mainScreenViewModel = remember {
-        MainScreenViewModel(context)
-    }
+fun SplashScreen(navController: NavHostController, mainScreenViewModel: MainScreenViewModel) {
     LaunchedEffect(key1 = true) {
         delay(3000)
         navController.popBackStack()
@@ -40,9 +36,6 @@ fun SplashScreen(navController: NavHostController) {
                     navController.navigate(Routes.MainScreen.routes)
                 } else {
                     navController.navigate(Routes.OnBoardingScreen.routes)
-                    launch {
-                        mainScreenViewModel.loadSeriesSampleList()
-                    }
                 }
             }
         )
@@ -73,7 +66,7 @@ fun Splash() {
                 painter = painterResource(id = R.drawable.cn_logo),
                 contentDescription = "Profile photo",
                 modifier = Modifier
-                    .size(height = 350.dp, width = 350.dp)
+                    .size(height = 225.dp, width = 225.dp)
             )
         }
     }
